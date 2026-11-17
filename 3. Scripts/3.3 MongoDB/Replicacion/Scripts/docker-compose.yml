@@ -1,0 +1,6 @@
+# Réplica set de 3 nodos para demostrar replicación ASÍNCRONA (docker compose up -d). Sin autenticación: solo para la demostración.
+services:
+  mongo1: { image: mongo:7, container_name: mongo1, command: ["--replSet","rsMype","--bind_ip_all","--port","27017"], ports: ["27017:27017"], volumes: ["m1:/data/db"] }
+  mongo2: { image: mongo:7, container_name: mongo2, command: ["--replSet","rsMype","--bind_ip_all","--port","27017"], ports: ["27018:27017"], volumes: ["m2:/data/db"] }
+  mongo3: { image: mongo:7, container_name: mongo3, command: ["--replSet","rsMype","--bind_ip_all","--port","27017"], ports: ["27019:27017"], volumes: ["m3:/data/db"] }
+volumes: { m1: {}, m2: {}, m3: {} }

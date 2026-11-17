@@ -1,0 +1,5 @@
+# Clúster Cassandra de 3 nodos (replicación asíncrona RF=3). docker compose up -d  (esperar ~2-3 min entre nodos). Requiere ~6 GB de RAM.
+services:
+  cass1: { image: cassandra:4.1, container_name: cass1, environment: { CASSANDRA_CLUSTER_NAME: MypeCluster, CASSANDRA_DC: datacenter1, CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch, MAX_HEAP_SIZE: 512M, HEAP_NEWSIZE: 128M }, ports: ["9042:9042"] }
+  cass2: { image: cassandra:4.1, container_name: cass2, depends_on: [cass1], environment: { CASSANDRA_CLUSTER_NAME: MypeCluster, CASSANDRA_DC: datacenter1, CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch, CASSANDRA_SEEDS: cass1, MAX_HEAP_SIZE: 512M, HEAP_NEWSIZE: 128M } }
+  cass3: { image: cassandra:4.1, container_name: cass3, depends_on: [cass2], environment: { CASSANDRA_CLUSTER_NAME: MypeCluster, CASSANDRA_DC: datacenter1, CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch, CASSANDRA_SEEDS: cass1, MAX_HEAP_SIZE: 512M, HEAP_NEWSIZE: 128M } }
